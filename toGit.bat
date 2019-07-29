@@ -11,6 +11,6 @@ git remote add github git@github.com:hutuys/hutuys.github.io.git
 
 git add .
 git commit -m "update blog"
-git push github master -v -f
+git push github master:master -v -f
 
 cd ..
