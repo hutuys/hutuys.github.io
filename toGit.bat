@@ -7,6 +7,6 @@ hugo
 cd ./public
 git add .
 git commit -m "update blog"
-git push origin master -v 
+git push github master -v 
 
 cd ..
