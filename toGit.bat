@@ -3,12 +3,12 @@ git add .
 git commit -m "update blog"
 git push github dev -v
 
-#rm -rf public
+rm -rf public
 hugo 
 
 cd ./public
-#git init
-#git remote add github git@github.com:hutuys/hutuys.github.io.git
+git init
+git remote add github git@github.com:hutuys/hutuys.github.io.git
 
 git add .
 git commit -m "update blog"
