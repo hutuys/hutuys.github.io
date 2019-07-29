@@ -1,7 +1,7 @@
 
 git add .
 git commit -m "update blog"
-git push github dev -V
+git push github dev -v
 
 hugo 
 cd ./public
