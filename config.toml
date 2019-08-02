@@ -1,7 +1,7 @@
 BaseUrl= "https://hutuys.github.io/"
 LanguageCode= "zh-cn"
 Title= "I am thinking ..."
-theme = "pulp"
+theme = "pulp-master"
 paginate = 5
 DisqusShortname = "suixin-1"  # name in comments
 Copyright = "All rights reserved - 2019"
