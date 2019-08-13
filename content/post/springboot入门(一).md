@@ -30,7 +30,7 @@ categories: [
 
 SpringBoot是Spring项目中的一个子工程，与我们所熟知的Spring-framework 同属于spring的产品:
 
-![1](/static/01-springboot/assets/1.png)
+![1](/01-springboot/assets/1.png)
 
 我们可以看到下面的一段介绍：
 
@@ -89,35 +89,31 @@ JDK: JKD8
 
 ## 2.1.创建工程
 
-我们先新建一个空的工程：
-
-![15655849563291](/static/01-springboot/assets/15655849563291.png)
-
-
+我们先新建一个空的工程
 
 工程名为demo：
 
- ![2](/static/01-springboot/assets/2.png)
+ ![2](/01-springboot/assets/2.png)
 
 新建一个model：
 
- ![3](/static/01-springboot/assets/3.png)
+ ![3](/01-springboot/assets/3.png)
 
 使用maven来构建：
 
-![5](/static/01-springboot/assets/5.png)
+![5](/01-springboot/assets/5.png)
 
 然后填写项目坐标：
 
- ![4](/static/01-springboot/assets/4.png)
+ ![4](/01-springboot/assets/4.png)
 
 目录结构：
 
- ![6](/static/01-springboot/assets/6.png)
+ ![6](/01-springboot/assets/6.png)
 
 项目结构：
 
- ![5](/static/01-springboot/assets/5.png)
+ ![5](/01-springboot/assets/5.png)
 
 ## 2.2.添加依赖
 
@@ -152,7 +148,7 @@ JDK: JKD8
 
 这个时候，我们会发现项目中多出了大量的依赖：
 
- ![7](/static/01-springboot/assets/7.png)
+ ![7](/01-springboot/assets/7.png)
 
 这些都是SpringBoot根据spring-boot-starter-web这个依赖自动引入的，而且所有的版本都已经管理好，不会出现冲突。
 
@@ -204,7 +200,7 @@ JDK: JKD8
 
 Spring Boot项目通过main函数即可启动，我们需要创建一个启动类：
 
- ![8](/static/01-springboot/assets/8.png)
+ ![8](/01-springboot/assets/8.png)
 
 然后编写main函数：
 
@@ -223,7 +219,7 @@ public class Application {
 
 我们编写一个controller：
 
- ![9](/static/01-springboot/assets/9.png)
+ ![9](/01-springboot/assets/9.png)
 
 代码：
 
@@ -243,7 +239,7 @@ public class HelloController {
 
 接下来，我们运行main函数，查看控制台 可以看到监听的端口信息：
 
- ![18](/static/01-springboot/assets/18.png)
+ ![18](/01-springboot/assets/18.png)
 
 - 1）监听的端口是8080
 - 2）SpringMVC的映射路径是：/
@@ -251,7 +247,7 @@ public class HelloController {
 
 打开页面访问：http://localhost:8080/hello
 
- ![12](/static/01-springboot/assets/12.png)
+ ![12](/01-springboot/assets/12.png)
 
 
 
@@ -382,7 +378,7 @@ public class HelloController {
 
 然后Debug运行并查看：
 
-![13](/static/01-springboot/assets/13.png)
+![13](/01-springboot/assets/13.png)
 
 属性注入成功了！
 
@@ -417,7 +413,7 @@ public class JdbcProperties {
 
 - 需要注意的是，这里我们并没有指定属性文件的地址，所以我们需要把jdbc.properties名称改为application.properties，这是SpringBoot默认读取的属性文件名：
 
-   ![14](/static/01-springboot/assets/14.png)
+   ![14](/01-springboot/assets/14.png)
 
 2）在JdbcConfig中使用这个属性：
 
@@ -471,13 +467,13 @@ public class JdbcConfig {
 
 3）测试结果：
 
-![15](/static/01-springboot/assets/15.png)
+![15](/01-springboot/assets/15.png)
 
 
 
 大家会觉得这种方式似乎更麻烦了，事实上这种方式有更强大的功能，也是SpringBoot推荐的注入方式。两者对比关系：
 
-![16](/static/01-springboot/assets/16.png)
+![16](/01-springboot/assets/16.png)
 
 优势：
 
@@ -511,4 +507,4 @@ public class JdbcConfig {
 
 我们将jdbc的url改成：/haoke，再次测试：
 
-![17](/static/01-springboot/assets/17.png)
+![17](/01-springboot/assets/17.png)
