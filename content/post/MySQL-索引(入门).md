@@ -1,9 +1,9 @@
 ---
-title: "MySQL索引知识整理(一)"
+title: "MySQL-索引(入门)"
 date: 2019-11-29T17:47:17+08:00
-tags: [""]
+tags: ["数据库"]
 categories: [
-    "Java"
+    "MySQL"
 ]
 ---
 

@@ -1,9 +1,9 @@
 ---
-title: "springboot入门(一)"
+title: "SpringBoot入门(一)"
 date: 2019-08-11T22:47:17+08:00
-tags: [""]
+tags: ["Springboot"]
 categories: [
-    "SpringBoot"
+    "Java"
 ]
 ---
 
