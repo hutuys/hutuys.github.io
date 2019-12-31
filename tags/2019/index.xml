@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2019 on Even - A super concise theme for Hugo</title>
+    <link>http://localhost:1313/tags/2019/</link>
+    <description>Recent content in 2019 on Even - A super concise theme for Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 29 Jul 2019 12:48:16 +0800</lastBuildDate>
+    
+	<atom:link href="http://localhost:1313/tags/2019/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java基础-数组</title>
+      <link>http://localhost:1313/post/java%E5%9F%BA%E7%A1%80-%E6%95%B0%E7%BB%84/</link>
+      <pubDate>Mon, 29 Jul 2019 12:48:16 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/java%E5%9F%BA%E7%A1%80-%E6%95%B0%E7%BB%84/</guid>
+      <description>1. Java数组 1.1. 概述 数组：数组表示的一串连续存储空间。每个空间中都可以保存一个数据。当我们需要操作的时候，不要去面对单个空间，而直接面对这个</description>
+    </item>
+    
+  </channel>
+</rss>

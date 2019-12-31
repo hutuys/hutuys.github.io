@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>MySQL-索引(入门) - Even - A super concise theme for Hugo</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Hutuys" /><meta name="description" content="MySQL索引 索引是什么 ? 为什么是B&#43;Tree索引 ? 理解索引几大原则 ? 引言： 正确的创建合适的索引，是提高数据库查询性能的基础。 1. 索引数据结构" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.0 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://localhost:1313/post/mysql-%E7%B4%A2%E5%BC%95%E5%85%A5%E9%97%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="MySQL-索引(入门)" />
+<meta property="og:description" content="MySQL索引 索引是什么 ? 为什么是B&#43;Tree索引 ? 理解索引几大原则 ? 引言： 正确的创建合适的索引，是提高数据库查询性能的基础。 1. 索引数据结构" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/mysql-%E7%B4%A2%E5%BC%95%E5%85%A5%E9%97%A8/" />
+<meta property="article:published_time" content="2019-11-29T17:47:17+08:00" />
+<meta property="article:modified_time" content="2019-11-29T17:47:17+08:00" />
+<meta itemprop="name" content="MySQL-索引(入门)">
+<meta itemprop="description" content="MySQL索引 索引是什么 ? 为什么是B&#43;Tree索引 ? 理解索引几大原则 ? 引言： 正确的创建合适的索引，是提高数据库查询性能的基础。 1. 索引数据结构">
+
+
+<meta itemprop="datePublished" content="2019-11-29T17:47:17&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-29T17:47:17&#43;08:00" />
+<meta itemprop="wordCount" content="1451">
+
+
+
+<meta itemprop="keywords" content="数据库," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MySQL-索引(入门)"/>
+<meta name="twitter:description" content="MySQL索引 索引是什么 ? 为什么是B&#43;Tree索引 ? 理解索引几大原则 ? 引言： 正确的创建合适的索引，是提高数据库查询性能的基础。 1. 索引数据结构"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">HutuysGo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">HutuysGo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">MySQL-索引(入门)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-11-29 </span>
+        <div class="post-category">
+            <a href="/categories/mysql/"> MySQL </a>
+            </div>
+          <span class="more-meta"> 约 1451 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#mysql索引">MySQL索引</a></li>
+<li><a href="#1-索引数据结构介绍">1. 索引数据结构介绍</a>
+<ul>
+<li><a href="#1-1-binary-search-trees">1.1 Binary Search Trees</a></li>
+<li><a href="#1-2-balanced-binary-search-trees">1.2 Balanced Binary Search Trees</a>
+<ul>
+<li><a href="#1-2-1-相对平衡二叉树">1.2.1 相对平衡二叉树</a></li>
+<li><a href="#1-2-2-完全平衡二叉树-avl-trees">1.2.2 完全平衡二叉树 (AVL Trees)</a></li>
+<li><a href="#1-2-3-如何保证平衡">1.2.3 如何保证平衡</a></li>
+<li><a href="#1-2-4-平衡二叉树每个节点的组成">1.2.4 平衡二叉树每个节点的组成：</a></li>
+<li><a href="#1-2-5-二叉树的缺陷">1.2.5 二叉树的缺陷：</a></li>
+</ul></li>
+<li><a href="#1-3-b-tree">1.3 B Tree</a>
+<ul>
+<li><a href="#1-3-1-特征">1.3.1 特征</a></li>
+<li><a href="#1-3-2-优势">1.3.2 优势</a></li>
+</ul></li>
+<li><a href="#1-4-b-tree">1.4 B+Tree</a>
+<ul>
+<li><a href="#1-4-1-特征">1.4.1 特征</a></li>
+<li><a href="#1-4-2-优势">1.4.2 优势</a></li>
+<li><a href="#1-4-3-b-tree-和-b-tree的区别">1.4.3 B+Tree 和 B Tree的区别：</a></li>
+</ul></li>
+<li><a href="#1-5-数据结构操作演示">1.5 数据结构操作演示</a></li>
+</ul></li>
+<li><a href="#2-索引">2. 索引</a>
+<ul>
+<li><a href="#2-1-mysam引擎">2.1 MySam引擎</a></li>
+<li><a href="#2-2-innodb引擎">2.2 InnoDB引擎</a></li>
+<li><a href="#2-3-联合索引">2.3 联合索引</a></li>
+<li><a href="#2-4-覆盖索引">2.4 覆盖索引</a></li>
+</ul></li>
+<li><a href="#3-q-a">3. Q&amp;A</a>
+<ul>
+<li><a href="#3-1-索引是什么">3.1 索引是什么 ?</a></li>
+<li><a href="#3-2-为什么是b-tree索引">3.2 为什么是B+Tree索引 ?</a></li>
+<li><a href="#3-3-理解索引几大原则">3.3 理解索引几大原则 ?</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="mysql索引">MySQL索引</h2>
+
+<ul>
+<li>索引是什么 ?</li>
+<li>为什么是B+Tree索引 ?</li>
+<li>理解索引几大原则 ?</li>
+</ul>
+
+<blockquote>
+<p><strong>引言： 正确的创建合适的索引，是提高数据库查询性能的基础</strong>。</p>
+</blockquote>
+
+<h2 id="1-索引数据结构介绍">1. 索引数据结构介绍</h2>
+
+<h3 id="1-1-binary-search-trees">1.1 Binary Search Trees</h3>
+
+<ul>
+<li>优势：二分查找效率高。</li>
+<li>缺陷：可能最终会形成一个线性链表。
+​</li>
+</ul>
+
+<h3 id="1-2-balanced-binary-search-trees">1.2 Balanced Binary Search Trees</h3>
+
+<h4 id="1-2-1-相对平衡二叉树">1.2.1 相对平衡二叉树</h4>
+
+<p>一个节点的子节点的高度差不能超过1</p>
+
+<h4 id="1-2-2-完全平衡二叉树-avl-trees">1.2.2 完全平衡二叉树 (AVL Trees)</h4>
+
+<p>任意的一个节点的高度差都不能超过1</p>
+
+<h4 id="1-2-3-如何保证平衡">1.2.3 如何保证平衡</h4>
+
+<p>插入不符合规范的时候会进行旋转操作。</p>
+
+<h4 id="1-2-4-平衡二叉树每个节点的组成">1.2.4 平衡二叉树每个节点的组成：</h4>
+
+<ul>
+<li>关键字：通过关键字对比来知道选择合适的数据或者指针。</li>
+<li>数据区：存放数据。</li>
+<li>子节点的引用(指针)
+​</li>
+</ul>
+
+<h4 id="1-2-5-二叉树的缺陷">1.2.5 二叉树的缺陷：</h4>
+
+<ul>
+<li>搜索效率不足 ：树的高度(决定了我们进行IO的次数、IO很耗时)</li>
+<li>节点数据内容太少：
+
+<ul>
+<li>一次IO操作加载的数据块太少。(一次交互，一页：4kb)</li>
+<li>没有利用好磁盘和IO的预读能力。(空间局部性原理)
+​</li>
+</ul></li>
+</ul>
+
+<h3 id="1-3-b-tree">1.3 B Tree</h3>
+
+<h4 id="1-3-1-特征">1.3.1 特征</h4>
+
+<ul>
+<li>完全平衡：子节点的高度都在同一水平线上</li>
+<li>路：子节点做多有多少个就是多少路。</li>
+<li>关键字匹配：开区间</li>
+<li>路数：等于关键字的个数 + 1；<br /></li>
+<li>节点内容：关键字、数据区、子节点引用。
+​</li>
+</ul>
+
+<h4 id="1-3-2-优势">1.3.2 优势</h4>
+
+<ul>
+<li>可以减少树的高度：从而减少IO次数</li>
+<li>搜索效率较高
+​</li>
+</ul>
+
+<h3 id="1-4-b-tree">1.4 B+Tree</h3>
+
+<h4 id="1-4-1-特征">1.4.1 特征</h4>
+
+<ul>
+<li>路：子节点做多有多少个就是多少路。</li>
+<li>路数：等于关键字的个数；</li>
+<li>关键字匹配：开区间</li>
+<li>子节点的高度都在同一水平线上。</li>
+<li>节点内容：关键字、字节的引用。</li>
+<li>叶子节点内容：关键字、数据区、指向相邻叶子节点的指针。
+​</li>
+</ul>
+
+<h4 id="1-4-2-优势">1.4.2 优势</h4>
+
+<ul>
+<li>具有B Tree所拥有的优势</li>
+</ul>
+
+<p>​</p>
+
+<h4 id="1-4-3-b-tree-和-b-tree的区别">1.4.3 B+Tree 和 B Tree的区别：</h4>
+
+<ul>
+<li>B+Tree节点搜索采用闭合区间。</li>
+<li>B+Tree顺序排列, 排序效率很快。扫库扫表的能力更强。</li>
+<li>B+Tree磁盘读写能力更强(B+Tree数据只会保存在叶子节点上 每次IO交互的关键字更多)。</li>
+<li>B+Tree更稳定。查询的时间比较稳定。 B Tree查询可能会很快也可能比较慢(不稳定)。
+​</li>
+</ul>
+
+<h3 id="1-5-数据结构操作演示">1.5 数据结构操作演示</h3>
+
+<p><a href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">演示地址</a></p>
+
+<h2 id="2-索引">2. 索引</h2>
+
+<h3 id="2-1-mysam引擎">2.1 MySam引擎</h3>
+
+<p>.frm  &ndash; 表定义文件
+.MYI  &ndash; 索引文件
+.MYD  &ndash; 数据文件</p>
+
+<p>.MYI 索引文件的最末尾子节点会有一个指针(地址)指向 .MYD数据文件。
+主键索引、辅助索引(二级索引) 没有区别。</p>
+
+<h3 id="2-2-innodb引擎">2.2 InnoDB引擎</h3>
+
+<p>.frm  &ndash; 表定义文件
+.ibd  &ndash; 索引、数据文件</p>
+
+<p>.ibd 以主键为索引来组织数据的。
+主键索引的叶子节点上会保存所有数据。</p>
+
+<p>聚集索引：数据库表行中的物理数据和索引顺序是相同的。(InnoDB表中主键为聚集索引)
+如果没有显式创建主键，InnoDB会默认创建一个RowId 大小6byte int。</p>
+
+<p>辅助索引：索引文件的最末尾的子节点会有一个主键值，然后通过主键索引去定位数据。</p>
+
+<p>好处：不需要维护辅助索引。</p>
+
+<h3 id="2-3-联合索引">2.3 联合索引</h3>
+
+<ul>
+<li>列的离散性
+
+<ul>
+<li>成正比：count(distinct col):count(col)</li>
+<li>列的离散型越高选择性就越好。</li>
+</ul></li>
+<li>最左前缀(匹配)原则
+
+<ul>
+<li>关键字都是从左往右依次进行且不可跳过(经常使用的列优先作为索引。)</li>
+</ul></li>
+<li>联合索引
+
+<ul>
+<li>单列索引：特殊的联合索引(只包含某个字段)</li>
+<li>联合索引：有一系列字段共同组成的某个索引(例如: idx_name_age(name, age))
+​   注意顺序问题！</li>
+</ul></li>
+</ul>
+
+<h3 id="2-4-覆盖索引">2.4 覆盖索引</h3>
+
+<p>覆盖索引：查询的数据 通过叶子节点数据可以直接返回。
+可通过 EXPLAIN 执行计划查看，Type &gt; range， EXTRA里面的内容是User Index则使用了覆盖索引。</p>
+
+<h2 id="3-q-a">3. Q&amp;A</h2>
+
+<h3 id="3-1-索引是什么">3.1 索引是什么 ?</h3>
+
+<ul>
+<li>索引是为了加速对表中数据行的检索而创建的一个<strong>分散存储</strong>的<strong>数据结构</strong>。</li>
+</ul>
+
+<h3 id="3-2-为什么是b-tree索引">3.2 为什么是B+Tree索引 ?</h3>
+
+<ul>
+<li>排序效率很快。扫库扫表的能力更强。(叶子节点数据是顺序的)</li>
+<li>B+Tree磁盘读写能力更强(B+Tree数据只会保存在叶子节点上 每次IO交互的关键字更多)。</li>
+<li>B+Tree更稳定(B+Tree数据只会保存在叶子节点上)。</li>
+</ul>
+
+<h3 id="3-3-理解索引几大原则">3.3 理解索引几大原则 ?</h3>
+
+<ul>
+<li>离散型高原则</li>
+<li>最左匹配原则</li>
+<li>最少空间原则</li>
+</ul>
+
+<p>最左匹配原则 &gt; 离散型高原则 &gt; 最少空间原则</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Hutuys</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-11-29
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/springboot%E5%85%A5%E9%97%A8%E4%B8%80/">
+            <span class="next-text nav-default">SpringBoot入门(一)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="http://localhost:1313" class="iconfont icon-douban" title="douban"></a>
+      <a href="http://localhost:1313" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="http://localhost:1313" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="http://localhost:1313" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://localhost:1313/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hutuys</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

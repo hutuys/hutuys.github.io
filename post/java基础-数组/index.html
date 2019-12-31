@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Java基础-数组 - Even - A super concise theme for Hugo</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Hutuys" /><meta name="description" content="1. Java数组 1.1. 概述 数组：数组表示的一串连续存储空间。每个空间中都可以保存一个数据。当我们需要操作的时候，不要去面对单个空间，而直接面对这个" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.0 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://localhost:1313/post/java%E5%9F%BA%E7%A1%80-%E6%95%B0%E7%BB%84/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Java基础-数组" />
+<meta property="og:description" content="1. Java数组 1.1. 概述 数组：数组表示的一串连续存储空间。每个空间中都可以保存一个数据。当我们需要操作的时候，不要去面对单个空间，而直接面对这个" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/java%E5%9F%BA%E7%A1%80-%E6%95%B0%E7%BB%84/" />
+<meta property="article:published_time" content="2019-07-29T12:48:16+08:00" />
+<meta property="article:modified_time" content="2019-07-29T12:48:16+08:00" />
+<meta itemprop="name" content="Java基础-数组">
+<meta itemprop="description" content="1. Java数组 1.1. 概述 数组：数组表示的一串连续存储空间。每个空间中都可以保存一个数据。当我们需要操作的时候，不要去面对单个空间，而直接面对这个">
+
+
+<meta itemprop="datePublished" content="2019-07-29T12:48:16&#43;08:00" />
+<meta itemprop="dateModified" content="2019-07-29T12:48:16&#43;08:00" />
+<meta itemprop="wordCount" content="1304">
+
+
+
+<meta itemprop="keywords" content="2019," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java基础-数组"/>
+<meta name="twitter:description" content="1. Java数组 1.1. 概述 数组：数组表示的一串连续存储空间。每个空间中都可以保存一个数据。当我们需要操作的时候，不要去面对单个空间，而直接面对这个"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">HutuysGo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">HutuysGo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Java基础-数组</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-07-29 </span>
+        <div class="post-category">
+            <a href="/categories/java/"> Java </a>
+            </div>
+          <span class="more-meta"> 约 1304 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#1-java数组">1. Java数组</a>
+<ul>
+<li><a href="#1-1-概述">1.1. 概述</a></li>
+<li><a href="#1-2-定义格式">1.2. 定义格式</a></li>
+<li><a href="#1-3-数组的好处">1.3. 数组的好处</a></li>
+<li><a href="#1-4-数组的内存分配">1.4. 数组的内存分配</a>
+<ul>
+<li><a href="#1-4-1-java内存分配">1.4.1 Java内存分配</a></li>
+<li><a href="#1-4-2-数组内存分配">1.4.2 数组内存分配</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="1-java数组">1. Java数组</h2>
+
+<h3 id="1-1-概述">1.1. 概述</h3>
+
+<p>数组：数组表示的一串连续存储空间。每个空间中都可以保存一个数据。当我们需要操作的时候，不要去面对单个空间，而直接面对这个整体的连续的存储区域。</p>
+
+<p>称为一类容器。它中可以保存多个数据。
+当我们有多个数据的时候，并且数据的类型是统一的，同时个数也是确定的，这时就可以使用数组保存。</p>
+
+<p>数据少了使用变量保存，数据一旦多了，就使用数组保存。</p>
+
+<p><strong>注意：数组既可以存储基本数据类型，也可以存储引用数据类型。</strong></p>
+
+<h3 id="1-2-定义格式">1.2. 定义格式</h3>
+
+<p>格式：
+数组中保存的数据类型[] 数组的名 = new 数组中保存的数据类型[开辟的连续空间个数];</p>
+
+<p>把上述定义的格式可以翻译成下述格式：
+数据类型[] 数组名 = new 数据类型[长度] ;</p>
+
+<p>//定义变量：
+数据类型  变量名 = 值;
+int a = 123;
+//定义数组：
+int[] arr = new int[4];  在内存中一次开辟4个连续的空间，每个空间都是int类型，并且这些空间中保存的数据也必须是int类型。</p>
+
+<h3 id="1-3-数组的好处">1.3. 数组的好处</h3>
+
+<p>好处：
+1、可以一次性开辟出更多的空间。
+2、可以对多个空间进行统一的管理。
+3、数组定义好之后，每个数组的空间中都有一个唯一的编号（索引index）。在操作数组时，需要通过该数组的名称和对应的下标来操作数组中每个空间。
+4、数组的下标是从0开始，到长度-1结束。如果操作的下标不在这个范围中，程序报错。
+5、在数组中有个属性length，可以获取到当前数组的长度。</p>
+
+<p>注意：
+数组也可以按照如下方式定义：
+数据类型 数组名[] = new 数据类型[长度];
+例如： double arr[] = new double[6];</p>
+
+<h3 id="1-4-数组的内存分配">1.4. 数组的内存分配</h3>
+
+<h4 id="1-4-1-java内存分配">1.4.1 Java内存分配</h4>
+
+<p>当我们在IDE中运行程序时，启动JVM。
+JVM把内存划分成5片区域：
+栈内存：栈内存主要是用来运行函数的，在函数中定义的所有变量，都会在这个内存开辟空间。(关于函数后面会讲解)
+在栈内存中定义的变量，不初始化，是不能直接使用的。
+注意：所有的函数都必须在栈内存中运行。
+而jvm只会运行处于栈内存顶部的函数。
+函数被加载到栈内存的动作，称为函数的压栈（入栈）。
+函数执行完之后就会从栈中消失（函数的弹栈，或者叫做出栈）</p>
+
+<p>堆内存：在程序中使用new 关键字创建出来的所有东西，都会保存在堆内存中。
+堆内存中开辟的空间，不赋值，都会有默认的初始化数据。
+整数：默认是0
+小数 默认0.0.
+boolean 默认是false
+char 默认是 ‘\u0000’
+引用数据类型默认值是 null</p>
+
+<p>方法区：JVM在加载class文件的时候，所有的class文件就要加载在这个内存中。</p>
+
+<p>本地方法区：主要是保存native关键字标注的方法(和系统相关)
+寄存器：是给CPU使用的。</p>
+
+<p>数组的简单操作：
+我们需要通过数组的总名称 引用变量空间，然后通过这个引用空间中的地址，再去找到堆内存中的连续的空间，然后才能准确的去操作数组。</p>
+
+<p>获得数组中每个空间中的值：
+数组名[下标];
+给数组的每个空间赋值：
+数组名[ 下标 ] = 值;</p>
+
+<h4 id="1-4-2-数组内存分配">1.4.2 数组内存分配</h4>
+
+<p>我们定义的数组名空间：
+它是一个特殊的内存空间，它中只能保存某个数组在堆中的内存地址。而不能像前面学习普通变量一样来保存普通的常量。
+数组名空间保存某个数组的地址，而数组的每个真实空间保存具体的普通常量数据。</p>
+
+<p><strong>注意：在Java中当被new出来的堆中的内存，没有任何一个引用指向它的时候，这时它就是一个垃圾，JVM就使用垃圾回收器把当前这片内存清理。</strong></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Hutuys</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-07-29
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/2019/">2019</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/springboot%E5%85%A5%E9%97%A8%E4%B8%80/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">SpringBoot入门(一)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="http://localhost:1313" class="iconfont icon-douban" title="douban"></a>
+      <a href="http://localhost:1313" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="http://localhost:1313" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="http://localhost:1313" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://localhost:1313/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hutuys</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
